@@ -294,7 +294,7 @@ func (e *EPC) GetZones() ([]Region, error) {
 }
 
 // Makes an action by api
-func (e *EPC) GetContents(values url.Values, unmarshalledResponse interface{}, checkStatus bool) error {
+func (e *EPC) getContents(values url.Values, unmarshalledResponse interface{}, checkStatus bool) error {
 	resp, err := e.maestroApiCall(values)
 	if err != nil {
 		return fmt.Errorf("Error trying API call - " + values.Get("action") + ": %s", err)
