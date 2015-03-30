@@ -108,7 +108,7 @@ func (e *EPC) maestroApiCall(v url.Values) (*http.Response, error) {
 }
 
 // Checks api, returns true or false
-func (e *EPC) checkMaestroApi() (bool, error) {
+func (e *EPC) CheckMaestroApi() (bool, error) {
 	check := true
 	values := url.Values{}
 	_, err := e.maestroApiCall(values)
@@ -120,7 +120,7 @@ func (e *EPC) checkMaestroApi() (bool, error) {
 }
 
 // Create instance by params (include a key pairs name)
-func (e *EPC) createInstance(key string) (Instance, error) {
+func (e *EPC) CreateInstance(key string) (Instance, error) {
 	values := url.Values{}
 	values.Set("action", runInstance)
 	values.Set("project", e.ProjectID)
@@ -139,7 +139,7 @@ func (e *EPC) createInstance(key string) (Instance, error) {
 }
 
 // Retrieves available instance info by instance-id
-func (e *EPC) getInstance(id string) (Instance, error) {
+func (e *EPC) GetInstance(id string) (Instance, error) {
 	var id_err error
 	if id == "" {
 		return Instance{}, id_err
@@ -160,7 +160,7 @@ func (e *EPC) getInstance(id string) (Instance, error) {
 }
 
 // Performs some actions on instance (start, stop, reboot, remove)
-func (e *EPC) instance(id string, action string, force bool) error {
+func (e *EPC) Instance(id string, action string, force bool) error {
 	values := url.Values{}
 	values.Set("action", actionInstance[action])
 	values.Set("project", e.ProjectID)
@@ -182,7 +182,7 @@ func (e *EPC) instance(id string, action string, force bool) error {
 }
 
 // Creates key pair by machine name
-func (e *EPC) makeKeyPair(key string, action string) (Key, error) {
+func (e *EPC) MakeKeyPair(key string, action string) (Key, error) {
 	values := url.Values{}
 	values.Set("action", action)
 	values.Set("project", e.ProjectID)
@@ -199,7 +199,7 @@ func (e *EPC) makeKeyPair(key string, action string) (Key, error) {
 }
 
 // Retrieves key
-func (e *EPC) getKeyPair(key string, action string) (Key, error) {
+func (e *EPC) GetKeyPair(key string, action string) (Key, error) {
 	values := url.Values{}
 	values.Set("action", action)
 	values.Set("project", e.ProjectID)
@@ -216,7 +216,7 @@ func (e *EPC) getKeyPair(key string, action string) (Key, error) {
 }
 
 // Deletes key pair by machine name
-func (e *EPC) removeKeyPair(key string, action string) (Key, error) {
+func (e *EPC) RemoveKeyPair(key string, action string) (Key, error) {
 	values := url.Values{}
 	values.Set("action", action)
 	values.Set("project", e.ProjectID)
@@ -233,7 +233,7 @@ func (e *EPC) removeKeyPair(key string, action string) (Key, error) {
 }
 
 // Retrieves available images
-func (e *EPC) getImages() ([]Image, error) {
+func (e *EPC) GetImages() ([]Image, error) {
 	values := url.Values{}
 	values.Set("action", describeImages)
 	values.Set("project", e.ProjectID)
@@ -249,7 +249,7 @@ func (e *EPC) getImages() ([]Image, error) {
 }
 
 // Retrieves available shapes
-func (e *EPC) getShapes() ([]Shape, error) {
+func (e *EPC) GetShapes() ([]Shape, error) {
 	values := url.Values{}
 	values.Set("project", e.ProjectID)
 	values.Set("region", e.Zone)
@@ -265,7 +265,7 @@ func (e *EPC) getShapes() ([]Shape, error) {
 }
 
 // Retrieves available projects
-func (e *EPC) getProjects() ([]Project, error) {
+func (e *EPC) GetProjects() ([]Project, error) {
 	values := url.Values{}
 	values.Set("action", describeProjects)
 	
@@ -279,7 +279,7 @@ func (e *EPC) getProjects() ([]Project, error) {
 }
 
 // Retrieves available zones
-func (e *EPC) getZones() ([]Region, error) {
+func (e *EPC) GetZones() ([]Region, error) {
 	values := url.Values{}
 	values.Set("project", e.ProjectID)
 	values.Set("action", describeRegions)
@@ -294,7 +294,7 @@ func (e *EPC) getZones() ([]Region, error) {
 }
 
 // Makes an action by api
-func (e *EPC) getContents(values url.Values, unmarshalledResponse interface{}, checkStatus bool) error {
+func (e *EPC) GetContents(values url.Values, unmarshalledResponse interface{}, checkStatus bool) error {
 	resp, err := e.maestroApiCall(values)
 	if err != nil {
 		return fmt.Errorf("Error trying API call - " + values.Get("action") + ": %s", err)
